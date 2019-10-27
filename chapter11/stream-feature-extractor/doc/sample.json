@@ -1,0 +1,6 @@
+{"event": {"application": "app001", "timestamp": 1529647699886, "user_id": "user001", "device_id": "device001", "amount": 100.0, "event_type": "transaction"} }
+{"event": {"application": "app001", "timestamp": 1529647700886, "user_id": "user001", "device_id": "device002", "amount": 100.0, "event_type": "transaction"} }
+{"event": {"application": "app001", "timestamp": 1529647701886, "user_id": "user001", "device_id": "device001", "amount": 50.0, "event_type": "transaction"} }
+{"event": {"application": "app001", "timestamp": 1529647702886, "user_id": "user002", "device_id": "device001", "amount": 50.0, "event_type": "transaction"} }
+{"event": {"application": "app001", "timestamp": 1529647703886, "user_id": "user002", "device_id": "device003", "amount": 100.0, "event_type": "transaction"} }
+{"event": {"application": "app001", "timestamp": 1529647704886, "user_id": "user001", "device_id": "device003", "amount": 100.0, "event_type": "transaction"} }

@@ -1,0 +1,17 @@
+config-application app001
+set-source --source '{"zookeeper": "127.0.0.1:2181", "topic": "app001-input", "group": "test-group", "offset": "largest"}'
+set-sink --sink '{"broker": "127.0.0.1:9092", "topic": "app001-output"}'
+
+add-field --event-type transaction --field-name c_timestamp --field-path $.event.timestamp
+add-field --event-type transaction --field-name user_id --field-path $.event.user_id
+add-field --event-type transaction --field-name device_id --field-path $.event.device_id
+add-field --event-type transaction --field-name amount --field-path $.event.amount
+
+add-macro --name "M_DEVICE_ON_USER_ONE_DAY(device, user)" --replace "COUNT_DISTINCT(1d, transaction, device, user)"
+
+add-feature --event-type transaction --feature "COUNT(1d, transaction, user_id)" --mode upget
+add-feature --event-type transaction --feature "M_DEVICE_ON_USER_ONE_DAY(device_id, user_id)" --mode upget
+add-feature --event-type transaction --feature "SUM(1h, transaction, amount, user_id)" --mode upget
+
+activate
+start
