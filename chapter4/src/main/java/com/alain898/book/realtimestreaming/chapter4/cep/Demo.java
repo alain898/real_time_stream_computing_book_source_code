@@ -42,47 +42,47 @@ public class Demo {
                     public boolean filter(JSONObject value) throws Exception {
                         return value.getDouble("temperature") < 100.0d;
                     }
-                });
-//                .times(2);
-//                .within(Time.seconds(15));
-
-        Pattern<JSONObject, JSONObject> untilPattern = startPattern
-                .timesOrMore(2)
-                .until(new SimpleCondition<JSONObject>() {
-                    @Override
-                    public boolean filter(JSONObject value) throws Exception {
-                        return value.getDouble("temperature") >= 100.0d;
-                    }
-                });
-//                .within(Time.seconds(15));
-
-        Pattern<JSONObject, JSONObject> nextPattern = startPattern.next("next")
-                .where(new SimpleCondition<JSONObject>() {
-                    @Override
-                    public boolean filter(JSONObject value) throws Exception {
-                        return value.getDouble("temperature") > 100.0d;
-                    }
                 })
                 .times(3);
 //                .within(Time.seconds(15));
 
-        Pattern<JSONObject, JSONObject> followedByPattern = startPattern.followedBy("followedBy")
-                .where(new SimpleCondition<JSONObject>() {
-                    @Override
-                    public boolean filter(JSONObject value) throws Exception {
-                        return value.getDouble("temperature") > 100.0d;
-                    }
-                })
-                .times(3);
+//        Pattern<JSONObject, JSONObject> untilPattern = startPattern
+//                .timesOrMore(2)
+//                .until(new SimpleCondition<JSONObject>() {
+//                    @Override
+//                    public boolean filter(JSONObject value) throws Exception {
+//                        return value.getDouble("temperature") >= 100.0d;
+//                    }
+//                });
 //                .within(Time.seconds(15));
 
-        Pattern<JSONObject, JSONObject> notNextPattern = startPattern.notNext("notNext")
-                .where(new SimpleCondition<JSONObject>() {
-                    @Override
-                    public boolean filter(JSONObject value) throws Exception {
-                        return value.getDouble("temperature") > 100.0d;
-                    }
-                });
+//        Pattern<JSONObject, JSONObject> nextPattern = startPattern.next("next")
+//                .where(new SimpleCondition<JSONObject>() {
+//                    @Override
+//                    public boolean filter(JSONObject value) throws Exception {
+//                        return value.getDouble("temperature") > 100.0d;
+//                    }
+//                })
+//                .times(3);
+//                .within(Time.seconds(15));
+////
+//        Pattern<JSONObject, JSONObject> followedByPattern = startPattern.followedBy("followedBy")
+//                .where(new SimpleCondition<JSONObject>() {
+//                    @Override
+//                    public boolean filter(JSONObject value) throws Exception {
+//                        return value.getDouble("temperature") > 100.0d;
+//                    }
+//                })
+//                .times(3);
+//                .within(Time.seconds(15));
+
+//        Pattern<JSONObject, JSONObject> notNextPattern = startPattern.notNext("notNext")
+//                .where(new SimpleCondition<JSONObject>() {
+//                    @Override
+//                    public boolean filter(JSONObject value) throws Exception {
+//                        return value.getDouble("temperature") > 100.0d;
+//                    }
+//                });
 //                .times(3);
 //                .within(Time.seconds(15));
 
@@ -105,7 +105,7 @@ public class Demo {
                 })
                 .times(1);
 
-        DataStream<JSONObject> alarmStream = CEP.pattern(temperatureStream, untilPattern)
+        DataStream<JSONObject> alarmStream = CEP.pattern(temperatureStream, followedByPattern2)
                 .select(new PatternSelectFunction<JSONObject, JSONObject>() {
                     @Override
                     public JSONObject select(Map<String, List<JSONObject>> pattern) throws Exception {
