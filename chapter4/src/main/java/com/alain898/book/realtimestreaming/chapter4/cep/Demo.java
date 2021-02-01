@@ -42,8 +42,18 @@ public class Demo {
                     public boolean filter(JSONObject value) throws Exception {
                         return value.getDouble("temperature") < 100.0d;
                     }
-                })
-                .times(3);
+                });
+//                .times(2);
+//                .within(Time.seconds(15));
+
+        Pattern<JSONObject, JSONObject> untilPattern = startPattern
+                .timesOrMore(2)
+                .until(new SimpleCondition<JSONObject>() {
+                    @Override
+                    public boolean filter(JSONObject value) throws Exception {
+                        return value.getDouble("temperature") >= 100.0d;
+                    }
+                });
 //                .within(Time.seconds(15));
 
         Pattern<JSONObject, JSONObject> nextPattern = startPattern.next("next")
@@ -82,11 +92,20 @@ public class Demo {
                     public boolean filter(JSONObject value) throws Exception {
                         return value.getDouble("temperature") > 100.0d;
                     }
-                })
+                });
 //                .times(3);
-                .within(Time.seconds(15));
+//                .within(Time.seconds(15));
 
-        DataStream<JSONObject> alarmStream = CEP.pattern(temperatureStream, notFollowedByPattern)
+        Pattern<JSONObject, JSONObject> followedByPattern2 = notFollowedByPattern.followedBy("followedBy")
+                .where(new SimpleCondition<JSONObject>() {
+                    @Override
+                    public boolean filter(JSONObject value) throws Exception {
+                        return value.getDouble("temperature") > 100.0d;
+                    }
+                })
+                .times(1);
+
+        DataStream<JSONObject> alarmStream = CEP.pattern(temperatureStream, untilPattern)
                 .select(new PatternSelectFunction<JSONObject, JSONObject>() {
                     @Override
                     public JSONObject select(Map<String, List<JSONObject>> pattern) throws Exception {
@@ -95,9 +114,9 @@ public class Demo {
 //                        return pattern.get("alarm").stream()
                         JSONObject result = new JSONObject();
                         result.put("start", pattern.get("start"));
-//                        result.put("next", pattern.get("next"));
-//                        result.put("followedBy", pattern.get("followedBy"));
-//                        result.put("notNext", pattern.get("notNext"));
+                        result.put("next", pattern.get("next"));
+                        result.put("followedBy", pattern.get("followedBy"));
+                        result.put("notNext", pattern.get("notNext"));
                         result.put("notFollowedBy", pattern.get("notFollowedBy"));
                         return result;
                     }
