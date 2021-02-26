@@ -1,0 +1,67 @@
+## 用docker启动Flink相关命令
+
+```
+
+# 创建并启动 Flink
+docker-compose -f docker-compose-flink.yml up -d
+
+# 进入 flink-jobmanager 容器
+docker exec -it flink-jobmanager /bin/sh
+
+# 查看 $FLINK_HOME
+echo $FLINK_HOME
+/opt/flink
+
+# 退出 flink-jobmanager 容器
+exit
+
+
+# 将 Flink CDC 相关jar包拷贝到每个flink容器的 $FLINK_HOME/lib 目录下
+docker cp flink-connector-elasticsearch-base_2.11-1.12.0.jar flink-taskmanager:/opt/flink/lib
+docker cp flink-connector-elasticsearch7_2.11-1.12.0.jar flink-taskmanager:/opt/flink/lib
+docker cp flink-format-changelog-json-1.1.1.jar flink-taskmanager:/opt/flink/lib
+docker cp flink-sql-connector-kafka_2.11-1.11.0.jar flink-taskmanager:/opt/flink/lib
+docker cp flink-sql-connector-mysql-cdc-1.1.1.jar flink-taskmanager:/opt/flink/lib
+
+docker cp flink-connector-elasticsearch-base_2.11-1.12.0.jar flink-jobmanager:/opt/flink/lib
+docker cp flink-connector-elasticsearch7_2.11-1.12.0.jar flink-jobmanager:/opt/flink/lib
+docker cp flink-format-changelog-json-1.1.1.jar flink-jobmanager:/opt/flink/lib
+docker cp flink-sql-connector-kafka_2.11-1.11.0.jar flink-jobmanager:/opt/flink/lib
+docker cp flink-sql-connector-mysql-cdc-1.1.1.jar flink-jobmanager:/opt/flink/lib
+
+docker cp dependency flink-taskmanager:/opt/flink/lib
+docker exec -it flink-taskmanager mv /opt/flink/lib/dependency/*.jar /opt/flink/lib/
+docker cp dependency flink-jobmanager:/opt/flink/lib
+docker exec -it flink-jobmanager mv /opt/flink/lib/dependency/*.jar /opt/flink/lib/
+
+# 重启 Flink
+docker-compose -f docker-compose-flink.yml restart
+
+
+# 进入 flink-jobmanager 容器
+docker exec -it flink-jobmanager /bin/sh
+
+# 启动 Flink SQL 客户端
+cd /opt/flink/bin
+./sql-client.sh embedded
+
+```
+
+## docker-compose常用命令
+
+```
+# 创建并启动服务
+docker-compose -f docker-compose-flink.yml up -d
+
+# 停止运行中的容器，并且删除容器和网络
+docker-compose -f docker-compose-flink.yml down
+
+# 启动已有服务
+docker-compose -f docker-compose-flink.yml start
+
+# 停止运行中的容器，但不删除容器
+docker-compose -f docker-compose-flink.yml stop
+
+# 重启已有服务
+docker-compose -f docker-compose-flink.yml restart
+```

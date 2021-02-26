@@ -1,0 +1,26 @@
+version: "2.1"
+services:
+  jobmanager:
+    image: flink:1.12.1-scala_2.11-java8
+    container_name: flink-jobmanager
+    expose:
+    - "6123"
+    ports:
+    - "8081:8081"
+    command: jobmanager
+    environment:
+    - JOB_MANAGER_RPC_ADDRESS=jobmanager
+
+  taskmanager:
+    image: flink:1.12.1-scala_2.11-java8
+    container_name: flink-taskmanager
+    expose:
+    - "6121"
+    - "6122"
+    depends_on:
+    - jobmanager
+    command: taskmanager
+    links:
+    - "jobmanager:jobmanager"
+    environment:
+    - JOB_MANAGER_RPC_ADDRESS=jobmanager
