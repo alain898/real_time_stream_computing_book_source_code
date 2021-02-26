@@ -17,7 +17,12 @@ exit
 
 
 # 将 Flink CDC 相关jar包拷贝到每个flink容器的 $FLINK_HOME/lib 目录下
+## 必须是下面这个网址下载的 flink-sql-connector-elasticsearch jar包。其它地方下载的不能用，甚至自己打的fat jar包也不能用。
+## https://ci.apache.org/projects/flink/flink-docs-release-1.12/dev/table/connectors/elasticsearch.html
+docker cp flink-sql-connector-elasticsearch7_2.11-1.12.0.jar flink-taskmanager:/opt/flink/lib
 docker cp course21-jars-1.0-SNAPSHOT-jar-with-dependencies.jar flink-taskmanager:/opt/flink/lib
+
+docker cp flink-sql-connector-elasticsearch7_2.11-1.12.0.jar flink-jobmanager:/opt/flink/lib
 docker cp course21-jars-1.0-SNAPSHOT-jar-with-dependencies.jar flink-jobmanager:/opt/flink/lib
 
 

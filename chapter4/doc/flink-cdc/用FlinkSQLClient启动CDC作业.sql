@@ -38,8 +38,7 @@ CREATE TABLE sourceTable (
 CREATE TABLE sinkTable (
   id INT,
   name STRING,
-  counts INT,
-  description STRING
+  counts INT
 ) WITH (
   'connector' = 'elasticsearch-7',
   'hosts' = 'http://192.168.43.131:9200',
