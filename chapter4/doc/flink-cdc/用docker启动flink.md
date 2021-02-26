@@ -19,6 +19,7 @@ exit
 # 将 Flink CDC 相关jar包拷贝到每个flink容器的 $FLINK_HOME/lib 目录下
 # course21-jars-1.0-SNAPSHOT-jar-with-dependencies.jar 由 course21jars 工程 package 构建而来
 # flink-sql-connector-elasticsearch7_2.11-1.12.0.jar 从此处下载：https://repo.maven.apache.org/maven2/org/apache/flink/flink-sql-connector-elasticsearch7_2.11/1.12.0/flink-sql-connector-elasticsearch7_2.11-1.12.0.jar
+# flink-sql-connector-elasticsearch 必须参考 https://ci.apache.org/projects/flink/flink-docs-release-1.12/dev/table/connectors/elasticsearch.html
 docker cp course21-jars-1.0-SNAPSHOT-jar-with-dependencies.jar flink-taskmanager:/opt/flink/lib
 docker cp flink-sql-connector-elasticsearch7_2.11-1.12.0.jar flink-jobmanager:/opt/flink/lib
 
