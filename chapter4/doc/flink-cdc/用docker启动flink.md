@@ -17,22 +17,9 @@ exit
 
 
 # 将 Flink CDC 相关jar包拷贝到每个flink容器的 $FLINK_HOME/lib 目录下
-docker cp flink-connector-elasticsearch-base_2.11-1.12.0.jar flink-taskmanager:/opt/flink/lib
-docker cp flink-connector-elasticsearch7_2.11-1.12.0.jar flink-taskmanager:/opt/flink/lib
-docker cp flink-format-changelog-json-1.1.1.jar flink-taskmanager:/opt/flink/lib
-docker cp flink-sql-connector-kafka_2.11-1.11.0.jar flink-taskmanager:/opt/flink/lib
-docker cp flink-sql-connector-mysql-cdc-1.1.1.jar flink-taskmanager:/opt/flink/lib
+docker cp course21-jars-1.0-SNAPSHOT-jar-with-dependencies.jar flink-taskmanager:/opt/flink/lib
+docker cp course21-jars-1.0-SNAPSHOT-jar-with-dependencies.jar flink-jobmanager:/opt/flink/lib
 
-docker cp flink-connector-elasticsearch-base_2.11-1.12.0.jar flink-jobmanager:/opt/flink/lib
-docker cp flink-connector-elasticsearch7_2.11-1.12.0.jar flink-jobmanager:/opt/flink/lib
-docker cp flink-format-changelog-json-1.1.1.jar flink-jobmanager:/opt/flink/lib
-docker cp flink-sql-connector-kafka_2.11-1.11.0.jar flink-jobmanager:/opt/flink/lib
-docker cp flink-sql-connector-mysql-cdc-1.1.1.jar flink-jobmanager:/opt/flink/lib
-
-docker cp dependency flink-taskmanager:/opt/flink/lib
-docker exec -it flink-taskmanager mv /opt/flink/lib/dependency/*.jar /opt/flink/lib/
-docker cp dependency flink-jobmanager:/opt/flink/lib
-docker exec -it flink-jobmanager mv /opt/flink/lib/dependency/*.jar /opt/flink/lib/
 
 # 重启 Flink
 docker-compose -f docker-compose-flink.yml restart
