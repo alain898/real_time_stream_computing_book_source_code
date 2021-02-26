@@ -26,13 +26,12 @@ CREATE TABLE sourceTable (
   description STRING
 ) WITH (
  'connector' = 'mysql-cdc',
- 'hostname' = '127.0.0.1',
+ 'hostname' = '192.168.43.131',
  'port' = '3306',
  'username' = 'root',
  'password' = '123456',
  'database-name' = 'db001',
- 'table-name' = 'table001',
- 'server-time-zone' = 'Asia/Shanghai'
+ 'table-name' = 'table001'
 );
 
 -- 创建目标数据库
@@ -43,7 +42,7 @@ CREATE TABLE sinkTable (
   description STRING
 ) WITH (
   'connector' = 'elasticsearch-7',
-  'hosts' = 'http://elasticsearch:9200',
+  'hosts' = 'http://192.168.43.131:9200',
   'index' = 'table001'
 );
 
