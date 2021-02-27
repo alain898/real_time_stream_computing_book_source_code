@@ -20,7 +20,7 @@ public class TestData {
             String sql = String.format("insert into db001.table001 values(%d, '%s', %d, '%s')",
                     id, name, counts, description);
             stmt.executeUpdate(sql);
-            Thread.sleep(10);
+            Thread.sleep(1000);
             System.out.printf("insert id[%s]\n", id);
         }
 
