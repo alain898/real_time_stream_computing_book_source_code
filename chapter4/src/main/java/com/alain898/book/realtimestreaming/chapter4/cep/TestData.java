@@ -12,7 +12,7 @@ public class TestData {
         Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3306", "root", "123456");
         stmt = conn.createStatement();
 
-        for (int i = 3000; i < 10000; i++) {
+        for (int i = 0; i < 20000; i++) {
             int id = i;
             String name = String.format("name%d", i);
             int counts = i * 10;
