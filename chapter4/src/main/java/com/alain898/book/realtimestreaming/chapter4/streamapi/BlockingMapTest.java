@@ -33,6 +33,10 @@ public class BlockingMapTest {
                 Thread.sleep(offerIntervalMs);
             } while (true);
         }
+
+        public void clear() {
+            this.map.clear();
+        }
     }
 
     public static void main(String[] args) {
