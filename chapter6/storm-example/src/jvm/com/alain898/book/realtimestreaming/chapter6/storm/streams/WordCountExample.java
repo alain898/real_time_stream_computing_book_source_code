@@ -34,6 +34,7 @@ public class WordCountExample {
 
         // print to a file
         wordCounts.forEach(new WordCountExample.Print2FileConsumer());
+        wordCounts.print();
 
         Config config = new Config();
         String topologyName = "test";
